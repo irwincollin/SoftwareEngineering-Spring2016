@@ -36,14 +36,26 @@
             -->
         </div>
         <div class="col-md-6">
-          <div class="jumbotron">
-            <h2>Detailed Information</h2>
-            <!--
-
-              Include a way to display detailed information about an individual listing:
-                   * consider how to use ng-click within the the table to implement this feature
-
-             -->
+          <div class="jumbotron" >
+            <h3 ng-hide="detailedInfo.showDetails">Click on a listing to display detailed information</h3>
+            <section ng-show="detailedInfo.showDetails">
+              <h2>Detailed Information</h2>
+              <div>
+                <strong>code:</strong> {{detailedInfo.code || "Unknown"}}
+              </div>
+              <div>
+                <strong>building name:</strong> {{detailedInfo.name || "Unknown"}}
+              </div>
+              <div>
+                <strong>address:</strong> {{detailedInfo.address || "Unknown"}}
+              </div>
+              <div>
+                <strong>latitude:</strong> {{detailedInfo.coordinates.latitude || "Unknown"}}
+              </div>
+              <div>
+                <strong>longitude:</strong> {{detailedInfo.coordinates.longitude || "Unknown"}}
+              </div>
+            </section>
           </div>
         </div>
       </div>
