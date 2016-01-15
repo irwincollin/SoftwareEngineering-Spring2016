@@ -23,7 +23,7 @@
                 <th>Building Name</th>
                 <th></th>
               </tr>
-              <tr ng-repeat="listing in listings | filter:searchText" ng-click="showDetails(listings.indexOf(listing))">
+              <tr ng-repeat="listing in listings | filter:searchText | orderBy:['code','name']" ng-click="showDetails(listings.indexOf(listing))">
                  <td>{{listing.code}}</td>
                  <td>{{listing.name}}</td>
                  <td><button ng-click="deleteListing(listings.indexOf(listing))">delete</button></td>
