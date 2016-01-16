@@ -6,3 +6,8 @@
   max-height: 400px;
   overflow: auto;
 }
+
+.selected {
+    background-color:00FF00;
+    font-weight:bold;
+}

@@ -24,9 +24,10 @@ angular.module('listings').controller('ListingsController', ['$scope', 'Listings
       $scope.listings.splice(index, 1);
     };
 
-    $scope.showDetails = function(index) {
-      $scope.detailedInfo = $scope.listings[index];
+    $scope.showDetails = function(item) {
+      $scope.detailedInfo = item;
       $scope.detailedInfo.showDetails = true
+      $scope.selectedItem = item;
     };
   }
 ]);
