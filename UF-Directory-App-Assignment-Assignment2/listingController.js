@@ -2,9 +2,13 @@ angular.module('listings').controller('ListingsController', ['$scope', 'Listings
   function($scope, Listings) {
     $scope.listings = Listings;
     $scope.detailedInfo = undefined;
-    $scope.newListing = {
-      coordinates: {}
-    };
+
+    var clearForm = function() {
+      $scope.newListing = {
+        coordinates: {}
+      };
+    }
+    clearForm();
 
     $scope.addListing = function() {
       var newListingToInsert = {
@@ -29,5 +33,11 @@ angular.module('listings').controller('ListingsController', ['$scope', 'Listings
       $scope.detailedInfo.showDetails = true
       $scope.selectedItem = item;
     };
+
+    $scope.pinClicked = function(pin) {
+      var index = this.id;
+      var listing = $scope.listings[index];
+      $scope.showDetails(listing);
+    }
   }
 ]);
