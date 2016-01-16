@@ -25,48 +25,63 @@
               </tr>
               <tr ng-init="selectedItem = null"
                   ng-repeat="listing in listings | filter:searchText | orderBy:['code','name']"
-                  class="listingItem" ng-class="{'selected':$parent.selectedItem == listing}"
-                  ng-click="showDetails(listing)">
+                  class="listingItem" ng-class="{'selected':$parent.selectedItem == listing}">
                  <td>{{listing.code}}</td>
                  <td>{{listing.name}}</td>
-                 <td><button ng-click="deleteListing(listings.indexOf(listing))">delete</button></td>
+                 <td><button class="btn btn-sm glyphicon glyphicon-info-sign" ng-click="showDetails(listing)"></button></td>
+                 <td><button class="btn btn-sm glyphicon glyphicon-edit" ng-click="editDetails(listing)"></button></td>
+                 <td><button class="btn btn-sm glyphicon glyphicon-remove" ng-click="deleteListing(listings.indexOf(listing))"></button></td>
                </tr>
             </table>
           </div>
           <br>
           <br>
-          <h2>Add new listing</h2>
-          <form ng-submit="addListing()">
-            <input type="text" ng-model="newListing.name" placeholder="Name">
-            <input type="text" ng-model="newListing.code" placeholder="Code">
-            <input type="text" ng-model="newListing.address" placeholder="Address">
-            <input type="number" ng-model="newListing.coordinates.latitude" placeholder="Latitude">
-            <input type="number" ng-model="newListing.coordinates.longitude" placeholder="longitude">
-            <button type="submit" class="btn btn-default">Submit</button>
-          </form>
+          <button class="btn btn-lg glyphicon glyphicon-plus" ng-click="startAddListing()"> Add Listing </button>
           <br>
         </div>
         <div class="col-md-6">
           <div class="jumbotron" >
-            <h3 ng-hide="detailedInfo.showDetails">Click on a listing to display detailed information</h3>
-            <section ng-show="detailedInfo.showDetails">
+            <h3 ng-hide="infoPane != ''">Click on a listing or edit</h3>
+            <section ng-show="infoPane == 'showDetails'">
               <h2>Detailed Information</h2>
               <div>
-                <strong>code:</strong> {{detailedInfo.code || "Unknown"}}
+                <strong>code:</strong> {{selectedItem.code || "Unknown"}}
               </div>
               <div>
-                <strong>building name:</strong> {{detailedInfo.name || "Unknown"}}
+                <strong>building name:</strong> {{selectedItem.name || "Unknown"}}
               </div>
               <div>
-                <strong>address:</strong> {{detailedInfo.address || "Unknown"}}
+                <strong>address:</strong> {{selectedItem.address || "Unknown"}}
               </div>
               <div>
-                <strong>latitude:</strong> {{detailedInfo.coordinates.latitude || "Unknown"}}
+                <strong>latitude:</strong> {{selectedItem.coordinates.latitude || "Unknown"}}
               </div>
               <div>
-                <strong>longitude:</strong> {{detailedInfo.coordinates.longitude || "Unknown"}}
+                <strong>longitude:</strong> {{selectedItem.coordinates.longitude || "Unknown"}}
               </div>
             </section>
+            <section ng-show="infoPane == 'editDetails'">
+              <h2>Edit Listing Information</h2>
+              <form ng-submit="editListing()">
+                <input type="text" ng-model="tempListing.name" placeholder="Name">
+                <input type="text" ng-model="tempListing.code" placeholder="Code">
+                <input type="text" ng-model="tempListing.address" placeholder="Address">
+                <input type="number" ng-model="tempListing.coordinates.latitude" placeholder="Latitude">
+                <input type="number" ng-model="tempListing.coordinates.longitude" placeholder="longitude">
+                <button type="submit" class="btn btn-default">Submit</button>
+              </form>
+            </section>
+          <section ng-show="infoPane == 'addListing'">
+            <h2>Add New Listing</h2>
+            <form ng-submit="addListing()">
+              <input type="text" ng-model="tempListing.name" placeholder="Name">
+              <input type="text" ng-model="tempListing.code" placeholder="Code">
+              <input type="text" ng-model="tempListing.address" placeholder="Address">
+              <input type="number" ng-model="tempListing.coordinates.latitude" placeholder="Latitude">
+              <input type="number" ng-model="tempListing.coordinates.longitude" placeholder="longitude">
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+          </section>
           </div>
           <div class="jumbotron" >
             <h2>Building Locations</h2>

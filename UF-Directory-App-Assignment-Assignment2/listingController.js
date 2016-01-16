@@ -1,26 +1,45 @@
 angular.module('listings').controller('ListingsController', ['$scope', 'Listings',
   function($scope, Listings) {
     $scope.listings = Listings;
-    $scope.detailedInfo = undefined;
+    $scope.selectedItem = undefined;
+    $scope.infoPane = '';
 
     var clearForm = function() {
-      $scope.newListing = {
+      $scope.tempListing = {
         coordinates: {}
       };
     }
     clearForm();
 
-    $scope.addListing = function() {
-      var newListingToInsert = {
-        name: $scope.newListing.name,
-        code: $scope.newListing.code,
-        address: $scope.newListing.address,
+    var copyListing = function(listing) {
+      var listingCopy = {
+        name: listing.name,
+        code: listing.code,
+        address: listing.address,
         coordinates: {
-          latitude: $scope.newListing.coordinates.latitude,
-          longitude: $scope.newListing.coordinates.longitude
+          latitude: listing.coordinates.latitude,
+          longitude: listing.coordinates.longitude
         }
       }
-      $scope.listings.push(newListingToInsert);
+      return listingCopy;
+    }
+
+    $scope.startAddListing = function() {
+      $scope.infoPane = "addListing";
+      clearForm();
+    }
+
+    $scope.addListing = function() {
+      $scope.listings.push(copyListing($scope.tempListing));
+      clearForm();
+    };
+
+    $scope.editListing = function() {
+      $scope.selectedItem.name = $scope.tempListing.name;
+      $scope.selectedItem.code =  $scope.tempListing.code;
+      $scope.selectedItem.address =  $scope.tempListing.address;
+      $scope.selectedItem.coordinates.latitude =  $scope.tempListing.coordinates.latitude;
+      $scope.selectedItem.coordinates.longitude =  $scope.tempListing.coordinates.longitude;
       clearForm();
     };
 
@@ -28,10 +47,15 @@ angular.module('listings').controller('ListingsController', ['$scope', 'Listings
       $scope.listings.splice(index, 1);
     };
 
-    $scope.showDetails = function(item) {
-      $scope.detailedInfo = item;
-      $scope.detailedInfo.showDetails = true
+    $scope.editDetails = function(item) {
       $scope.selectedItem = item;
+      $scope.tempListing = copyListing(item);
+      $scope.infoPane = "editDetails";
+    };
+
+    $scope.showDetails = function(item) {
+      $scope.selectedItem = item;
+      $scope.infoPane = "showDetails";
     };
 
     $scope.pinClicked = function(pin) {
