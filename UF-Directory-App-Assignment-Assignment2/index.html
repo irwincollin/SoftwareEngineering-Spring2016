@@ -22,26 +22,26 @@
                 <th>Code</th>
                 <th>Building Name</th>
                 <th></th>
+                <th></th>
+                <th></th>
               </tr>
               <tr ng-init="selectedItem = null"
                   ng-repeat="listing in listings | filter:searchText | orderBy:['code','name']"
                   class="listingItem" ng-class="{'selected':$parent.selectedItem == listing}">
                  <td>{{listing.code}}</td>
                  <td>{{listing.name}}</td>
-                 <td><button class="btn btn-sm glyphicon glyphicon-info-sign" ng-click="showDetails(listing)"></button></td>
-                 <td><button class="btn btn-sm glyphicon glyphicon-edit" ng-click="editDetails(listing)"></button></td>
-                 <td><button class="btn btn-sm glyphicon glyphicon-remove" ng-click="deleteListing(listings.indexOf(listing))"></button></td>
+                 <div id="btnContainer">
+                   <td><button class="btn btn-sm glyphicon glyphicon-info-sign" ng-click="showDetails(listing)"></button></td>
+                   <td><button class="btn btn-sm glyphicon glyphicon-edit" ng-click="editDetails(listing)"></button></td>
+                   <td><button class="btn btn-sm glyphicon glyphicon-remove" ng-click="deleteListing(listings.indexOf(listing))"></button></td>
+                 </span>
                </tr>
             </table>
           </div>
-          <br>
-          <br>
-          <button class="btn btn-lg glyphicon glyphicon-plus" ng-click="startAddListing()"> Add Listing </button>
-          <br>
+          <button id="addListingBtn" class="btn btn-lg" ng-click="startAddListing()">Add Listing</button>
         </div>
         <div class="col-md-6">
-          <div class="jumbotron" >
-            <h3 ng-hide="infoPane != ''">Click on a listing or edit</h3>
+          <div class="jumbotron" ng-show="infoPane != ''">
             <section ng-show="infoPane == 'showDetails'">
               <h2>Detailed Information</h2>
               <div>
@@ -83,7 +83,7 @@
             </form>
           </section>
           </div>
-          <div class="jumbotron" >
+          <div class="jumbotron">
             <h2>Building Locations</h2>
             <section map-lazy-load="https://maps.google.com/maps/api/js">
               <ng-map center="29.64327,-82.35594" zoom="14">
